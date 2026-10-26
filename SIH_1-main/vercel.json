@@ -1,26 +1,29 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "AICTE_Approval/app.py",
-      "use": "@vercel/python"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "aicte_approval": {
+      "root": "AICTE_Approval",
+      "framework": "flask"
     },
-    {
-      "src": "sih-aicte/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+    "sih-aicte": {
+      "root": "sih-aicte",
+      "framework": "vite"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "AICTE_Approval/app.py"
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "aicte_approval",
+        "path": "/$1"
+      }
     },
     {
-      "src": "/(.*)",
-      "dest": "sih-aicte/$1"
+      "source": "/(.*)",
+      "destination": {
+        "service": "sih-aicte",
+        "path": "/$1"
+      }
     }
   ]
 }
