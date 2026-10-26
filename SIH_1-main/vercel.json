@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "AICTE_Approval/app.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "sih-aicte/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "AICTE_Approval/app.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "sih-aicte/$1"
+    }
+  ]
+}
